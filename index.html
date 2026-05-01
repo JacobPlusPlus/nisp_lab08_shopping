@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShopWave — Sklep</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header__inner">
+      <a href="#" class="logo">Shop<span>Wave</span></a>
+      <nav class="nav">
+        <a href="#" class="nav__link active">Strona główna</a>
+        <a href="#products" class="nav__link">Produkty</a>
+        <a href="#" class="nav__link">O nas</a>
+        <a href="#" class="nav__link">Kontakt</a>
+      </nav>
+      <button class="cart-btn" id="cartBtn" aria-label="Koszyk">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h13M7 13L5.4 5M10 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z"/></svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero__blob hero__blob--1"></div>
+    <div class="hero__blob hero__blob--2"></div>
+    <div class="hero__content">
+      <p class="hero__tag">Nowa kolekcja 2025</p>
+      <h1 class="hero__title">Styl, który<br/><em>mówi za Ciebie</em></h1>
+      <p class="hero__sub">Odkryj produkty starannie dobrane dla Twojego stylu życia. Jakość bez kompromisów.</p>
+      <div class="hero__actions">
+        <a href="#products" class="btn btn--primary">Przeglądaj produkty</a>
+        <a href="#" class="btn btn--ghost">Dowiedz się więcej</a>
+      </div>
+    </div>
+    <div class="hero__visual">
+      <div class="hero__card">
+        <div class="hero__card-icon">✦</div>
+        <p>Darmowa dostawa</p>
+        <span>od 199 zł</span>
+      </div>
+      <div class="hero__card">
+        <div class="hero__card-icon">↩</div>
+        <p>Zwroty 30 dni</p>
+        <span>bez pytań</span>
+      </div>
+      <div class="hero__card">
+        <div class="hero__card-icon">⊛</div>
+        <p>Gwarancja</p>
+        <span>2 lata</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section class="products" id="products">
+    <div class="products__header">
+      <h2 class="section-title">Nasze <span>Produkty</span></h2>
+      <p class="section-sub">Wybierz coś dla siebie</p>
+    </div>
+    <div class="products__grid" id="productsGrid">
+      <!-- JS renders cards here -->
+    </div>
+  </section>
+
+  <!-- CART MODAL -->
+  <div class="cart-overlay" id="cartOverlay">
+    <div class="cart-modal">
+      <div class="cart-modal__header">
+        <h3>Twój koszyk</h3>
+        <button class="cart-close" id="cartClose">✕</button>
+      </div>
+      <div class="cart-modal__items" id="cartItems">
+        <p class="cart-empty">Koszyk jest pusty.</p>
+      </div>
+      <div class="cart-modal__footer" id="cartFooter" style="display:none">
+        <div class="cart-total">
+          Łącznie: <strong id="cartTotal">0,00 zł</strong>
+        </div>
+        <button class="btn btn--primary" style="width:100%">Zamów teraz</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>© 2025 ShopWave · Wszelkie prawa zastrzeżone</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

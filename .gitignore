@@ -1,0 +1,17 @@
+# System
+.DS_Store
+Thumbs.db
+
+# Edytory
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node (na przyszłość)
+node_modules/
+npm-debug.log
+
+# Środowisko
+.env
+.env.local
