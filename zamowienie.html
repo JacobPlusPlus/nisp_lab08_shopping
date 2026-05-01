@@ -27,19 +27,33 @@
   <section class="products" id="zamowienie">
     <div class="products__header">
       <h2 class="section-title">Złóż <span>Zamówienie</span></h2>
-      <p class="section-sub">Wypełnij formularz aby sfinalizować zakupy</p>
+      <p class="section-sub">Sprawdź produkty i wypełnij formularz</p>
     </div>
-    <div class="order-form">
-      <input type="text" placeholder="Imię i nazwisko" class="form-input" />
-      <input type="email" placeholder="Adres e-mail" class="form-input" />
-      <input type="text" placeholder="Adres dostawy" class="form-input" />
-      <button class="btn" id="submitOrder">Zamów teraz</button>
+
+    <!-- Podsumowanie produktów -->
+    <div class="order-summary">
+      <div id="orderItems"></div>
+      <div id="orderTotal" style="display:none;">
+        <p class="cart-total">Łączna kwota: <strong id="totalPrice">0 zł</strong></p>
+      </div>
     </div>
-    <div id="orderConfirmation" class="order-confirmation" style="display:none;">
+
+    <!-- Formularz -->
+    <div id="orderFormSection" class="order-form" style="display:none;">
+      <input type="text" id="name" placeholder="Imię i nazwisko" class="form-input" />
+      <input type="email" id="email" placeholder="Adres e-mail" class="form-input" />
+      <input type="text" id="address" placeholder="Adres dostawy" class="form-input" />
+      <input type="tel" id="phone" placeholder="Numer telefonu" class="form-input" />
+      <button class="btn" id="confirmBtn">Zamów teraz</button>
+    </div>
+
+    <!-- Ekran sukcesu -->
+    <div id="orderSuccess" class="order-confirmation" style="display:none;">
       <h3>✅ Dziękujemy za zamówienie!</h3>
       <p>Potwierdzenie zostanie wysłane na podany adres e-mail.</p>
       <a href="index.html" class="btn">Wróć do sklepu</a>
     </div>
+
   </section>
 
   <footer class="footer">
