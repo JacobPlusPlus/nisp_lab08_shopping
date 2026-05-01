@@ -479,3 +479,5 @@ a { text-decoration: none; color: inherit; }
   .order-page { grid-template-columns: 1fr; padding: 40px 20px 60px; }
   .cart-page { padding: 40px 20px 60px; }
 }
+
+/* To jest poprawny komentarz w CSS */
