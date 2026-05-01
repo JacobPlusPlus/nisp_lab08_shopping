@@ -1,25 +1,63 @@
 // ================================================
-//  ShopWave — app.js
+//  ShopWave — app.js (Student A)
+//  Lista zakupów + zapis do localStorage
 // ================================================
 
-// ---- DANE PRODUKTÓW ----
+const CART_KEY = 'shopwave_cart';
+
+// ---- PRODUKTY ----
 const products = [
-  { id: 1, name: 'Plecak miejski',        emoji: '🎒', price: 249,  category: 'Akcesoria' },
-  { id: 2, name: 'Słuchawki bezprzewodowe', emoji: '🎧', price: 399, category: 'Elektronika' },
-  { id: 3, name: 'Sneakersy Classic',     emoji: '👟', price: 329,  category: 'Obuwie' },
-  { id: 4, name: 'Kurtka zimowa',         emoji: '🧥', price: 549,  category: 'Odzież' },
-  { id: 5, name: 'Zegarek sportowy',      emoji: '⌚', price: 899,  category: 'Akcesoria' },
-  { id: 6, name: 'Książka o JS',          emoji: '📗', price:  89,  category: 'Książki' },
-  { id: 7, name: 'Kubek termiczny',       emoji: '☕', price:  79,  category: 'Dom' },
-  { id: 8, name: 'Mata do jogi',          emoji: '🧘', price: 159,  category: 'Sport' },
+  { id: 1, name: 'Plecak miejski',           emoji: '🎒', price: 249, category: 'Akcesoria' },
+  { id: 2, name: 'Słuchawki bezprzewodowe',  emoji: '🎧', price: 399, category: 'Elektronika' },
+  { id: 3, name: 'Sneakersy Classic',        emoji: '👟', price: 329, category: 'Obuwie' },
+  { id: 4, name: 'Kurtka zimowa',            emoji: '🧥', price: 549, category: 'Odzież' },
+  { id: 5, name: 'Zegarek sportowy',         emoji: '⌚', price: 899, category: 'Akcesoria' },
+  { id: 6, name: 'Książka o JavaScript',     emoji: '📗', price:  89, category: 'Książki' },
+  { id: 7, name: 'Kubek termiczny',          emoji: '☕', price:  79, category: 'Dom' },
+  { id: 8, name: 'Mata do jogi',             emoji: '🧘', price: 159, category: 'Sport' },
 ];
 
-// ---- STAN KOSZYKA ----
-let cart = [];
+// ---- POMOCNICZE: localStorage ----
+function getCart() {
+  return JSON.parse(localStorage.getItem(CART_KEY)) || [];
+}
+
+function saveCart(cart) {
+  localStorage.setItem(CART_KEY, JSON.stringify(cart));
+}
+
+function addToCart(productId) {
+  const cart = getCart();
+  const product = products.find(p => p.id === productId);
+  const existing = cart.find(i => i.id === productId);
+
+  if (existing) {
+    existing.qty++;
+  } else {
+    cart.push({ ...product, qty: 1 });
+  }
+
+  saveCart(cart);
+}
+
+function getCartCount() {
+  return getCart().reduce((sum, item) => sum + item.qty, 0);
+}
+
+// ---- AKTUALIZACJA LICZNIKA W HEADERZE ----
+function updateCartBadge() {
+  const badge = document.getElementById('cartCount');
+  if (!badge) return;
+  const count = getCartCount();
+  badge.textContent = count;
+  badge.classList.toggle('visible', count > 0);
+}
 
 // ---- RENDEROWANIE PRODUKTÓW ----
 function renderProducts() {
   const grid = document.getElementById('productsGrid');
+  if (!grid) return;
+
   grid.innerHTML = '';
 
   products.forEach((p, i) => {
@@ -38,78 +76,14 @@ function renderProducts() {
     grid.appendChild(card);
   });
 
-  // Obsługa przycisków
   grid.querySelectorAll('.product-card__add').forEach(btn => {
     btn.addEventListener('click', () => {
       const id = Number(btn.dataset.id);
-      addToCart(id, btn);
+      addToCart(id);
+      updateCartBadge();
+      flashBtn(btn);
     });
   });
-}
-
-// ---- KOSZYK ----
-function addToCart(id, btn) {
-  const product = products.find(p => p.id === id);
-  const existing = cart.find(i => i.id === id);
-  if (existing) {
-    existing.qty++;
-  } else {
-    cart.push({ ...product, qty: 1 });
-  }
-  updateCart();
-  flashBtn(btn);
-}
-
-function removeFromCart(id) {
-  cart = cart.filter(i => i.id !== id);
-  updateCart();
-}
-
-function changeQty(id, delta) {
-  const item = cart.find(i => i.id === id);
-  if (!item) return;
-  item.qty += delta;
-  if (item.qty <= 0) removeFromCart(id);
-  else updateCart();
-}
-
-function updateCart() {
-  const count = cart.reduce((s, i) => s + i.qty, 0);
-  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-
-  // Licznik na ikonie
-  const badge = document.getElementById('cartCount');
-  badge.textContent = count;
-  badge.classList.toggle('visible', count > 0);
-
-  // Lista w modalu
-  const itemsEl  = document.getElementById('cartItems');
-  const footerEl = document.getElementById('cartFooter');
-  const totalEl  = document.getElementById('cartTotal');
-
-  if (cart.length === 0) {
-    itemsEl.innerHTML = '<p class="cart-empty">Koszyk jest pusty.</p>';
-    footerEl.style.display = 'none';
-    return;
-  }
-
-  footerEl.style.display = 'flex';
-  totalEl.textContent = total.toFixed(2).replace('.', ',') + ' zł';
-
-  itemsEl.innerHTML = cart.map(item => `
-    <div class="cart-item">
-      <span class="cart-item__emoji">${item.emoji}</span>
-      <div class="cart-item__info">
-        <p class="cart-item__name">${item.name}</p>
-        <p class="cart-item__price">${(item.price * item.qty).toFixed(2).replace('.', ',')} zł</p>
-      </div>
-      <div class="cart-item__qty">
-        <button onclick="changeQty(${item.id}, -1)">−</button>
-        <span>${item.qty}</span>
-        <button onclick="changeQty(${item.id}, +1)">+</button>
-      </div>
-    </div>
-  `).join('');
 }
 
 function flashBtn(btn) {
@@ -121,13 +95,6 @@ function flashBtn(btn) {
   }, 1200);
 }
 
-// ---- MODAL KOSZYKA ----
-const cartOverlay = document.getElementById('cartOverlay');
-document.getElementById('cartBtn').addEventListener('click',  () => cartOverlay.classList.add('open'));
-document.getElementById('cartClose').addEventListener('click', () => cartOverlay.classList.remove('open'));
-cartOverlay.addEventListener('click', e => {
-  if (e.target === cartOverlay) cartOverlay.classList.remove('open');
-});
-
 // ---- START ----
 renderProducts();
+updateCartBadge();
