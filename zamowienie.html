@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShopWave — Zamówienie</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="header__inner">
+      <a href="index.html" class="logo">Shop<span>Wave</span></a>
+      <nav class="nav">
+        <a href="index.html" class="nav__link">Lista zakupów</a>
+        <a href="koszyk.html" class="nav__link">Koszyk</a>
+        <a href="zamowienie.html" class="nav__link active">Zamówienie</a>
+      </nav>
+      <a href="koszyk.html" class="cart-btn" aria-label="Koszyk">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h13M7 13L5.4 5M10 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z"/>
+        </svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </a>
+    </div>
+  </header>
+
+  <section class="products" id="zamowienie">
+    <div class="products__header">
+      <h2 class="section-title">Złóż <span>Zamówienie</span></h2>
+      <p class="section-sub">Wypełnij formularz aby sfinalizować zakupy</p>
+    </div>
+    <div class="order-form">
+      <input type="text" placeholder="Imię i nazwisko" class="form-input" />
+      <input type="email" placeholder="Adres e-mail" class="form-input" />
+      <input type="text" placeholder="Adres dostawy" class="form-input" />
+      <button class="btn" id="submitOrder">Zamów teraz</button>
+    </div>
+    <div id="orderConfirmation" class="order-confirmation" style="display:none;">
+      <h3>✅ Dziękujemy za zamówienie!</h3>
+      <p>Potwierdzenie zostanie wysłane na podany adres e-mail.</p>
+      <a href="index.html" class="btn">Wróć do sklepu</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>© 2025 ShopWave · Wszelkie prawa zastrzeżone</p>
+  </footer>
+  <script src="app.js"></script>
+</body>
+</html>
